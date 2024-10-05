@@ -1,8 +1,10 @@
 from collections import defaultdict, Counter
 from typing import List
+import heapq
+
 
 class Solution:
-    # 81ms Beats 90.14% | Memory 22.26 MB Beats 7.14%
+    # 81ms Beats 90.14% | Memory 22.26 MB Beats 7.14% O(n)
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         counter = Counter(nums)
         helper_array = [[] for _ in range(len(nums))]
@@ -22,8 +24,21 @@ class Solution:
     def topKFrequent2(self, nums: List[int], k: int) -> List[int]:
         return [tup[0] for tup in Counter(nums).most_common()[:k]]
 
-    # (nlogn)
+    # nlogk (insertion and removal heap - logk; n elements to process)
     def topKFrequent3(self, nums: List[int], k: int) -> List[int]:
+        counts = Counter(nums)
+
+        heap = []
+
+        for num, freq in counts.items():
+            heapq.heappush(heap, (freq, num))
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        return [num for _, num in heap]
+
+    # nlogn
+    def topKFrequent4(self, nums: List[int], k: int) -> List[int]:
         d = defaultdict(int)
 
         for num in nums:
