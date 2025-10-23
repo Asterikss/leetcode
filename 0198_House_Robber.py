@@ -21,7 +21,7 @@ class Solution:
 
   # too slow
   def rob4(self, nums: List[int]) -> int:
-    max_ammount = 0
+    max_amount = 0
     # [1, 3, 1, 4, 9]
     # 1 11
     # 3
@@ -30,17 +30,17 @@ class Solution:
     # [9, 1, 0, 80, 9]
     # [9, 7, 0, 6, 80, 900, 1]
 
-    def rob(idx: int, ammount: int):
-      nonlocal max_ammount
+    def rob(idx: int, amount: int):
+      nonlocal max_amount
       if idx >= len(nums):
         return
-      ammount += nums[idx]
-      max_ammount = max(max_ammount, ammount)
+      amount += nums[idx]
+      max_amount = max(max_amount, amount)
 
-      rob(idx + 2, ammount)
-      rob(idx + 3, ammount)
+      rob(idx + 2, amount)
+      rob(idx + 3, amount)
 
     rob(0, 0)
     rob(1, 0)
 
-    return max_ammount
+    return max_amount
